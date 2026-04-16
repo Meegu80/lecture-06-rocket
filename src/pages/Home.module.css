@@ -1,0 +1,67 @@
+/* Home.module.css */
+.container {
+    min-height: 100vh;
+    background-color: #0b0e14; /* 깊은 우주 느낌의 블랙 */
+    color: #f8fafc;
+    font-family: 'Pretendard', sans-serif;
+}
+
+.hero {
+    padding: 80px 24px;
+    text-align: center;
+    /* 우주 성운 느낌의 그라데이션 */
+    background: radial-gradient(circle at top left, #1e293b, #0b0e14),
+    linear-gradient(135deg, #ef4444 0%, #3b82f6 100%);
+    background-blend-mode: overlay;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.title {
+    margin: 0;
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+}
+
+.content {
+    padding: 48px 24px;
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.flexContainer {
+    display: flex;
+    flex-wrap: wrap; /* 줄바꿈 허용 */
+    gap: 30px; /* 아이템 간 간격 */
+    justify-content: flex-start;
+}
+
+/* 각 카드의 너비를 계산하여 한 줄에 몇 개를 넣을지 결정합니다.
+   (100% - (간격 * (개수-1))) / 개수
+*/
+.flexItem {
+    flex: 0 1 calc((100% - 60px) / 3); /* 기본 3열 */
+    min-width: 300px; /* 모바일 대응을 위한 최소 너비 */
+}
+
+.loading {
+    text-align: center;
+    padding: 100px;
+    font-size: 1.2rem;
+    color: #64748b;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+/* 모바일 대응 (화면이 작아지면 1열로) */
+@media (max-width: 1024px) {
+    .flexItem {
+        flex: 0 1 calc((100% - 30px) / 2); /* 2열 */
+    }
+}
+
+@media (max-width: 680px) {
+    .flexItem {
+        flex: 0 1 100%; /* 1열 */
+    }
+}

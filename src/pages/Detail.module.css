@@ -1,0 +1,104 @@
+/* Detail.module.css */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 24px;
+    min-height: 100vh;
+    font-family: 'Pretendard', sans-serif;
+}
+
+.backLink {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 20px;
+    margin-bottom: 32px;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #94a3b8;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.backLink:hover {
+    background-color: #3b82f6;
+    color: white;
+    transform: translateX(-4px);
+}
+
+.card {
+    background-color: #1e293b;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.imageWrapper {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+}
+
+.rocketImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card:hover .rocketImage {
+    transform: scale(1.05);
+}
+
+.infoSection {
+    padding: 40px;
+    color: #f1f5f9;
+}
+
+.name {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0 0 16px 0;
+    background: linear-gradient(to right, #fff, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.description {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #cbd5e1;
+    margin-bottom: 32px;
+}
+
+.specs {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.specItem {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+}
+
+.label {
+    color: #64748b;
+    font-weight: 500;
+}
+
+.value {
+    color: #fff;
+    font-weight: 600;
+}
+
+.loading, .notFound {
+    text-align: center;
+    padding: 100px;
+    color: #94a3b8;
+}

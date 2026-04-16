@@ -1,0 +1,51 @@
+/* RocketCard.module.css */
+.card {
+    display: block;
+    width: 100%; /* 부모의 flex-item 너비를 따름 */
+    padding: 24px;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(10px); /* 유리 질감 효과 */
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: #3b82f6;
+    /* 우주선 엔진 느낌의 푸른 그림자 */
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+}
+
+.name {
+    margin: 0 0 12px 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+.card:hover .name {
+    color: #3b82f6;
+}
+
+.country {
+    font-size: 1rem;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* 국가명 앞에 작은 포인트를 줌 */
+.country::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background-color: #ef4444;
+    border-radius: 50%;
+}

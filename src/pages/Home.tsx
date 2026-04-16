@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import RocketCard from "../components/RocketCard.tsx";
-import { twMerge } from "tailwind-merge";
+import styles from "./Home.module.css";
 
 export type Rocket = {
     id: string;
@@ -18,38 +18,37 @@ function Home() {
 
     useEffect(() => {
         fetch("https://api.spacexdata.com/v4/rockets")
-            .then(response => response.json())
+            .then(res => res.json())
             .then((data: Rocket[]) => {
                 setRockets(data);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error("Fetch error:", err);
                 setLoading(false);
             });
     }, []);
 
     return (
-        <>
-            <div
-                className={twMerge(
-                    ["px-6", "py-10"],
-                    ["text-white", "text-center"],
-                    ["bg-linear-to-r from-red-500 to-blue-500"],
-                )}>
-                <h1 className={twMerge("m-0", "text-4xl", "font-bold")}>
-                    🚀 SpaceX Rocket Archive
-                </h1>
-            </div>
+        <div className={styles.container}>
+            <header className={styles.hero}>
+                <h1 className={styles.title}>🚀 SpaceX Archive</h1>
+            </header>
 
-            <div className={twMerge("py-8", "px-6")}>
+            <main className={styles.content}>
                 {loading ? (
-                    <div>Loading...</div>
+                    <div className={styles.loading}>SCANNING FOR ROCKETS...</div>
                 ) : (
-                    <div className={twMerge("flex", "flex-wrap", "gap-5", "box-border")}>
-                        {rockets.map((rocket, index) => {
-                            return <RocketCard key={index} data={rocket} />;
-                        })}
+                    <div className={styles.flexContainer}>
+                        {rockets.map(rocket => (
+                            <div key={rocket.id} className={styles.flexItem}>
+                                <RocketCard data={rocket} />
+                            </div>
+                        ))}
                     </div>
                 )}
-            </div>
-        </>
+            </main>
+        </div>
     );
 }
 

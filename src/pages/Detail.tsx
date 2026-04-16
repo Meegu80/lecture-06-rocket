@@ -1,62 +1,74 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import type { Rocket } from "./Home.tsx";
-import { twMerge } from "tailwind-merge";
+import styles from "./Detail.module.css";
 
 function Detail() {
-    // API 주소 : https://api.spacexdata.com/v4/rockets/${id}
-    // state -> loading, rocket
+    const { id } = useParams();
     const [loading, setLoading] = useState(true);
     const [rocket, setRocket] = useState<Rocket | null>(null);
-    const { id } = useParams();
 
     useEffect(() => {
+        if (!id) return;
+
         fetch(`https://api.spacexdata.com/v4/rockets/${id}`)
-            .then(response => response.json())
+            .then(res => res.json())
             .then((data: Rocket) => {
                 setRocket(data);
                 setLoading(false);
+            })
+            .catch(err => {
+                console.error("Detail load error:", err);
+                setLoading(false);
             });
-    }, []);
+    }, [id]);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-    if (!rocket) {
-        return <div>Not Found</div>;
-    }
+    if (loading) return <div className={styles.loading}>접속 중...</div>;
+    if (!rocket) return <div className={styles.notFound}>로켓 정보를 찾을 수 없습니다.</div>;
 
     return (
-        <div
-            className={twMerge(
-                ["max-w-[800px]", "px-6", "py-10", "mx-auto"],
-                ["flex", "flex-col", "box-border"],
-            )}>
-            <Link
-                to={"/"}
-                className={twMerge(
-                    ["p-4", "mb-5"],
-                    ["rounded-md", "bg-indigo-300", "text-indigo-800", "no-underline", "font-bold"],
-                    ["hover:bg-indigo-400"],
-                )}>
-                &larr; Back to list
+        <div className={styles.container}>
+            <Link to="/" className={styles.backLink}>
+                &larr; 목록으로 돌아가기
             </Link>
 
-            <div className={twMerge(["rounded-2xl", "shadow-xl"], ["flex", "flex-col"])}>
+            <article className={styles.card}>
                 {rocket.flickr_images.length > 0 && (
-                    <img
-                        className={twMerge("rounded-t-2xl")}
-                        src={rocket.flickr_images[0]}
-                        alt={rocket.name}
-                    />
+                    <div className={styles.imageWrapper}>
+                        <img
+                            className={styles.rocketImage}
+                            src={rocket.flickr_images[0]}
+                            alt={rocket.name}
+                        />
+                    </div>
                 )}
-                <div className={twMerge("p-6", "box-border")}>
-                    <h2>{rocket.name}</h2>
-                    <p>{rocket.description}</p>
-                    <p>Cost per launch : ${rocket.cost_per_launch.toLocaleString()}</p>
-                    <p>Country : {rocket.country}</p>
+
+                <div className={styles.infoSection}>
+                    <h1 className={styles.name}>{rocket.name}</h1>
+                    <p className={styles.description}>{rocket.description}</p>
+
+                    <div className={styles.specs}>
+                        <div className={styles.specItem}>
+                            <span className={styles.label}>발사 비용</span>
+                            <span className={styles.value}>
+                                ${rocket.cost_per_launch.toLocaleString()}
+                            </span>
+                        </div>
+                        <div className={styles.specItem}>
+                            <span className={styles.label}>제조 국가</span>
+                            <span className={styles.value}>{rocket.country}</span>
+                        </div>
+                        <div className={styles.specItem}>
+                            <span className={styles.label}>상태</span>
+                            <span
+                                className={styles.value}
+                                style={{ color: rocket.active ? "#10b981" : "#ef4444" }}>
+                                {rocket.active ? "운용 중" : "비운용"}
+                            </span>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </article>
         </div>
     );
 }
